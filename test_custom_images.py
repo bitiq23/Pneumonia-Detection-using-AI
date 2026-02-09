@@ -12,8 +12,10 @@ print("=" * 70)
 MODEL_PATH = r'C:\Users\AliKhalid\PycharmProjects\PythonProject\best_model_v2.h5'
 IMG_SIZE = (150, 150)
 
+
+# ===================================
 # 1. Load Model
-# ============================================================================
+# ===================================
 
 print("\n Loading the model...")
 try:
@@ -25,25 +27,23 @@ except Exception as e:
 
 
 
+# ==========================================================================
 # 2. Predict on a single image
-# ============================================================================
+# ===========================================================================
 
 def predict_image(img_path, show_image=True):
     """
     Predict on a single image with visualization
     """
     try:
-        # Load and preprocess image
         img = image.load_img(img_path, target_size=IMG_SIZE)
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = img_array / 255.0
 
-        # Prediction
         prediction = model.predict(img_array, verbose=0)
         prob = prediction[0][0]
 
-        # Interpret result
         if prob > 0.5:
             diagnosis = "🔴 Pneumonia"
             confidence = prob
@@ -53,14 +53,12 @@ def predict_image(img_path, show_image=True):
             confidence = 1 - prob
             color = 'green'
 
-        # Print result
         print(f"\n Image: {os.path.basename(img_path)}")
         print(f"   Diagnosis: {diagnosis}")
         print(f"   Confidence: {confidence * 100:.2f}%")
         print(f"   Pneumonia probability: {prob * 100:.2f}%")
         print(f"   Normal probability: {(1 - prob) * 100:.2f}%")
 
-        # Show image
         if show_image:
             plt.figure(figsize=(8, 8))
             plt.imshow(img)
@@ -79,6 +77,8 @@ def predict_image(img_path, show_image=True):
 
 # ============================================================================
 # 3. Predict on folder
+# ============================================================================
+
 
 def predict_folder(folder_path):
     """
@@ -109,7 +109,6 @@ def predict_folder(folder_path):
                 'probability': prob
             })
 
-    # Summary
     print("\n" + "=" * 70)
     print(" Summary of results:")
     print("=" * 70)
@@ -121,14 +120,12 @@ def predict_folder(folder_path):
     print(f"   🟢 Normal cases: {normal_count} ({normal_count / len(results) * 100:.1f}%)")
     print(f"   🔴 Pneumonia cases: {pneumonia_count} ({pneumonia_count / len(results) * 100:.1f}%)")
 
-    # Detailed table
     print(f"\n{'File':<30} {'Diagnosis':<15} {'Confidence':<10}")
     print("-" * 60)
     for r in results:
         diag_short = r['diagnosis'].replace('🔴 ', '').replace('🟢 ', '')
         print(f"{r['file']:<30} {diag_short:<15} {r['confidence'] * 100:>6.2f}%")
 
-    # Plot
     plot_folder_results(results)
 
     return results
@@ -136,6 +133,8 @@ def predict_folder(folder_path):
 
 # ============================================================================
 # 4. Plot folder results
+# ============================================================================
+
 
 def plot_folder_results(results):
     """
@@ -171,8 +170,9 @@ def plot_folder_results(results):
     print("\n Saved: folder_results.png")
     plt.show()
 
-
+# ============================================================================
 # 5. Compare two images
+# ============================================================================
 
 def compare_images(img_path1, img_path2):
 
@@ -205,9 +205,9 @@ def compare_images(img_path1, img_path2):
     plt.show()
 
 
-# ===================
+# ============================================================================
 # 6. Interactive Menu
-# ===================
+# ============================================================================
 
 def interactive_menu():
     while True:
@@ -284,3 +284,4 @@ if __name__ == "__main__":
             predict_image(test_img)
         else:
             print(" Test image not found")
+
