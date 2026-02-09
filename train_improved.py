@@ -21,7 +21,7 @@ BATCH_SIZE = 32
 EPOCHS = 30
 
 # ===========================================
-# Improvement 1: Stronger Data Augmentation
+# 1: Stronger Data Augmentation
 # ===========================================
 print("\n Preparing data with stronger augmentation...")
 
@@ -64,7 +64,7 @@ test_generator = val_test_datagen.flow_from_directory(
 )
 
 # ===========================================
-# Improvement 2: Lighter Model + Stronger Dropout
+# 2: Lighter Model + Stronger Dropout
 # ===========================================
 print("\n Building improved model...")
 
@@ -101,7 +101,7 @@ model = keras.Sequential([
 ])
 
 # ===========================================
-# Improvement 3: Smaller Learning Rate
+# 3: Smaller Learning Rate
 # ===========================================
 model.compile(
     optimizer=keras.optimizers.Adam(learning_rate=0.0001),
@@ -117,7 +117,7 @@ print("\n Model summary:")
 model.summary()
 
 # ===========================================
-# Improvement 4: Better Callbacks
+# 4: Better Callbacks
 # ===========================================
 early_stop = EarlyStopping(
     monitor='val_loss',
@@ -142,7 +142,7 @@ checkpoint = ModelCheckpoint(
 )
 
 # ===========================================
-# Training
+# 5: Training
 # ===========================================
 print("\n" + "="*60)
 print(" Starting improved training...")
@@ -157,7 +157,7 @@ history = model.fit(
 )
 
 # ===========================================
-# Saving & Evaluation
+# 6: Saving & Evaluation
 # ===========================================
 model.save('final_model_v2.h5')
 
@@ -172,7 +172,7 @@ print(f"   Recall:    {test_rec*100:.2f}%")
 print(f"   F1-Score:  {2*(test_prec*test_rec)/(test_prec+test_rec):.4f}")
 
 # ===========================================
-# Plotting Results
+# 7:  Plotting Results
 # ===========================================
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 
@@ -205,3 +205,4 @@ plt.savefig('improved_results.png', dpi=300)
 plt.show()
 
 print("\n Done!")
+
