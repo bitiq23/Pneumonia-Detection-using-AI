@@ -1,0 +1,1 @@
+The trained model file (model_v2.h5) could not be uploaded to this repository due to its large size. Even after compression, the file exceeded GitHub’s upload limits. For evaluation purposes, the project includes all source code, preprocessing steps, and documentation, while the trained model can be shared separately upon request.
